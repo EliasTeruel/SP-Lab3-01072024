@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles/styles-general.css">
+    <link rel="stylesheet" href="./styles/styles-spinner.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.svg">
+    <script src="./js/script.js" type="module" defer></script>
+    <script src="./js/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <title>ABM de Cryptos</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav-container d-flex justify-content-between align-items-center py-3">
+                <div class="logo d-flex align-items-center">
+                    <img src="./assets/images/logo.svg" alt="Logo de Cryptos" class="me-2">
+                    <span class="logo-text">Cryptos</span>
+                </div>
+                <nav>
+                    <ul class="nav">
+                        <li class="nav-item"><a class="nav-link text-white" href="#">Nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">Anuncio</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <h1 class="text-center my-3">Administrador de Monedas</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section>
+                <form action="" method="post" id="form-item">
+                    <h2>Información de la Moneda</h2>
+                    <input type="number" name="id" id="id" hidden>
+
+                    <div class="form-group mb-3">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" required name="nombre" id="nombre"
+                            placeholder="Ingrese Nombre..">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="simbolo">Símbolo</label>
+                        <input type="text" class="form-control" required name="simbolo" id="simbolo"
+                            placeholder="Ingrese Símbolo..">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="precio">Precio Actual (USD)</label>
+                        <input type="number" class="form-control" required name="precio" id="precio"
+                            placeholder="Ingrese Precio..">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tipo-de-concenso">Tipo de Consenso</label>
+                        <select name="tipo-de-concenso" id="tipo-de-concenso" class="form-select">
+                            <option value="Acuerdo de consenso">Acuerdo de consenso</option>
+                            <option value="Prueba de participacion">Prueba de participación</option>
+                            <option value="Prueba de trabajo">Prueba de trabajo</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="cantidad-de-circulacion">Cantidad de Circulación</label>
+                        <input type="number" class="form-control" name="cantidad-de-circulacion"
+                            id="cantidad-de-circulacion" placeholder="Ingrese Cantidad..">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="algoritmo">Algoritmo</label>
+                        <select name="algoritmo" id="algoritmo" class="form-select">
+                            <option value="SHA-256">SHA-256</option>
+                            <option value="Ethash">Ethash</option>
+                            <option value="Scrypt">Scrypt</option>
+                            <option value="Ouroboros">Ouroboros</option>
+                            <option value="Ripple Protocol">Ripple Protocol</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="sitio-web-oficial">Sitio Web Oficial</label>
+                        <input type="text" class="form-control" required name="sitio-web-oficial" id="sitio-web-oficial"
+                            placeholder="Ingrese Sitio..">
+                    </div>
+                    <div class="button-container d-flex justify-content-between mb-3">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <div id="spinnerLoad" class="spinnerLoad">
+                            <img src="./assets/images/img-load.svg" alt="SpinnerLoad" class="spinner-load">
+                        </div>
+                        <button type="button" class="btn btn-secondary" id="btn-cancelar">Cancelar</button>
+                    </div>
+                </form>
+                <button id="btn-mas-acciones" class="btn btn-info my-3">Más acciones</button>
+
+                <div id="acciones-panel" class="acciones-panel d-none">
+                    <div>
+                        <h4>Modificar - Borrar</h4>
+                        <input type="number" class="form-control mb-3" name="option-ID" id="ID"
+                            placeholder="Ingrese ID" />
+                        <button id="btn-modificar" class="btn btn-warning mb-2">Modificar</button>
+                        <button id="btn-borrar" class="btn btn-danger mb-2">Borrar</button>
+                        <button id="btn-delete-all" class="btn btn-danger mb-2">Borrar todo</button>
+                        <button id="btn-ocultar" class="btn btn-secondary mb-2">Ocultar</button>
+                    </div>
+
+                    <div>
+                        <h4>Filtrar por Algoritmo:</h4>
+                        <form id="filter-form">
+                            <select id="select-type">
+                                <option value="">Seleccione un algoritmo</option>
+                                <option value="SHA-256">SHA-256</option>
+                                <option value="Ethash">Ethash</option>
+                                <option value="Scrypt">Scrypt</option>
+                                <option value="Ouroboros">Ouroboros</option>
+                                <option value="Ripple Protocol">Ripple Protocol</option>
+                            </select>
+                            <p>Promedio de Precio: <span id="algoritmo-price">N/A</span></p>
+                            <button id="filter-button" class="btn btn-primary">Filtrar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="container-table">
+                    <table id="table-items" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th data-column="id">ID</th>
+                                <th data-column="nombre">Nombre</th>
+                                <th data-column="simbolo">Símbolo</th>
+                                <th data-column="fechaCreacion">Fecha Creación</th>
+                                <th data-column="precioActual">Precio Actual</th>
+                                <th data-column="consenso">Consenso</th>
+                                <th data-column="cantidadCirculacion">Cantidad Circulación</th>
+                                <th data-column="algoritmo">Algoritmo</th>
+                                <th data-column="sitioWeb">Sitio Web</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbodyx"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+    <div id="spinner" class="spinner">
+        <img src="./assets/images/logo.svg" alt="Spinner" class="spinner-img">
+    </div>
+    <footer class="footer bg-dark text-white py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <nav>
+                        <ul class="nav">
+                            <li class="nav-item"><a class="nav-link text-white" href="#">Nosotros</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="#">Anuncio</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="#">Blog</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="#">Contacto</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>Todos los derechos reservados <date>2021</date> &copy;</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
